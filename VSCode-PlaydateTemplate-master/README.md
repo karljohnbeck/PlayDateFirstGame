@@ -11,3 +11,5 @@ TOdo
     - maybe add diffrent types  for toppings on the top 
     - add a bad topping that game overs
     - add bun for win
+    - limit movement
+    
