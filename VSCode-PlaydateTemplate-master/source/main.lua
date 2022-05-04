@@ -6,27 +6,35 @@ import "CoreLibs/crank"
 
 local gfx <const> = playdate.graphics
 
+
+-- constants
 local playerSprite = nil
-
 local playerSpeed = 4
-
 local gameTimer = nil
 local playTime = 30 * 1000
-
 local coinSprite = nil
-
 local score = 0
+local Y = 40
 
+--  functions
 local function resetTimer()
 	playTimer = playdate.timer.new(playTime, playTime, 0, playdate.easingFunctions.linear)
 end
 
 local function moveCoin()
-	local randX = math.random(40, 360)
-	local randY = math.random(40, 200)
-	coinSprite:moveTo(randX, randY)
+	-- local randX = math.random(40, 360)
+	if Y > 200 then
+		Y = 40
+	end
+	local randX = 40
+
+	-- local randY = math.random(40, 200)
+
+	coinSprite:moveTo(randX, Y)
+	Y += 1
 end
 
+-- on game load
 local function initialize ()
 	math.randomseed(playdate.getSecondsSinceEpoch())
 
@@ -57,6 +65,7 @@ end;
 
 initialize()
 
+-- on page game render 30 times a sec
 function playdate.update()
 	if playTimer.value == 0 then
 		if playdate.buttonIsPressed(playdate.kButtonA) then
@@ -83,6 +92,7 @@ function playdate.update()
 			moveCoin()
 			score += 1
 		end
+		moveCoin()
 
 	end
 
