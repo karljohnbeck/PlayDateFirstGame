@@ -15,6 +15,7 @@ local playTime = 30 * 1000
 local coinSprite = nil
 local score = 0
 local Y = 40
+local randX = math.random(40, 360)
 
 --  functions
 local function resetTimer()
@@ -22,16 +23,17 @@ local function resetTimer()
 end
 
 local function moveCoin()
-	-- local randX = math.random(40, 360)
+	X = randX
 	if Y > 200 then
 		Y = 40
 	end
-	local randX = 40
+	-- removed
+	-- local randX = 40
 
 	-- local randY = math.random(40, 200)
 
 	coinSprite:moveTo(randX, Y)
-	Y += 1
+	Y += 2
 end
 
 -- on game load
@@ -89,6 +91,8 @@ function playdate.update()
 
 		local collisions = coinSprite:overlappingSprites()
 		if #collisions >= 1 then
+			randX = math.random(40, 360)
+			Y = 200
 			moveCoin()
 			score += 1
 		end
