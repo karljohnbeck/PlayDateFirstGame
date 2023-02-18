@@ -16,6 +16,7 @@ local coinSprite = nil
 local score = 0
 local Y = 40
 local randX = math.random(40, 360)
+local misses = 0 
 
 --  functions
 local function resetTimer()
@@ -25,6 +26,8 @@ end
 local function moveCoin()
 	X = randX
 	if Y > 200 then
+		misses += 1
+		randX = math.random(40, 360)
 		Y = 40
 	end
 	-- removed
@@ -105,5 +108,7 @@ function playdate.update()
 
 	gfx.drawText("Time: " .. math.ceil(playTimer.value/1000), 5, 5)
 	gfx.drawText("Score: " .. score, 320, 5)
+	gfx.drawText("misses: " .. misses, 230, 5)
+
 end
 
