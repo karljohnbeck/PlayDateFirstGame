@@ -30,10 +30,6 @@ local function moveCoin()
 		randX = math.random(40, 360)
 		Y = 40
 	end
-	-- removed
-	-- local randX = 40
-
-	-- local randY = math.random(40, 200)
 
 	coinSprite:moveTo(randX, Y)
 	Y += 2
