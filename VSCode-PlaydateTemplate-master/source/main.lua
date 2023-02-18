@@ -49,7 +49,7 @@ local function initialize ()
 	playerSprite:setCollideRect(0,0,playerSprite:getSize())
 	playerSprite:add()
 
-	local coinImage = gfx.image.new("image/coin")
+	local coinImage = gfx.image.new("image/tomato")
 	coinSprite = gfx.sprite.new(coinImage)
 	moveCoin()
 	coinSprite:setCollideRect(0, 0, coinSprite:getSize())
@@ -94,10 +94,12 @@ function playdate.update()
 
 		local collisions = coinSprite:overlappingSprites()
 		if #collisions >= 1 then
-			randX = math.random(40, 360)
-			Y = 200
-			moveCoin()
+			Y = 40
 			score += 1
+			randX = math.random(40, 360)
+			moveCoin()
+			
+			
 		end
 		moveCoin()
 
