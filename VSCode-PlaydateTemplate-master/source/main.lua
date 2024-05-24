@@ -17,6 +17,7 @@ local score = 0;
 local Y = 40;
 local randX = math.random(40, 360);
 local misses = 0;
+local fallspeed = 2;
 local toppingImage = nil;
 local images = {
 	'image/burger',
@@ -49,7 +50,7 @@ local function moveTopping()
 	end
 
 	toppingSprite:moveTo(randX, Y)
-	Y += 2
+	Y += fallspeed
 end
 
 -- local function draw()
@@ -116,6 +117,7 @@ function playdate.update()
 		local collisions = toppingSprite:overlappingSprites()
 		if #collisions >= 1 then
 			Y = 40
+			fallspeed += 1
 			score += 1
 			randX = math.random(40, 360)
 			-- random topping
