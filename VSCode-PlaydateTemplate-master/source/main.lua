@@ -52,6 +52,12 @@ local function moveTopping()
 	Y += 2
 end
 
+-- local function draw()
+-- 	screen.clear()
+-- 	screen.text("Welcome to My Game!")
+-- 	screen.update()
+--   end
+
 -- on game load
 local function initialize ()
 	math.randomseed(playdate.getSecondsSinceEpoch())
@@ -80,6 +86,7 @@ local function initialize ()
 	)
 
 	resetTimer()
+
 end;
 
 initialize()
