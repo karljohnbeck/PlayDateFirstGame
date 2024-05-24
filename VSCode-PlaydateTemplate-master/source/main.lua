@@ -11,33 +11,52 @@ local gfx <const> = playdate.graphics
 local playerSprite = nil
 local playerSpeed = 4
 local gameTimer = nil
-local playTime = 30 * 1000
-local coinSprite = nil
-local score = 0
-local Y = 40
-local randX = math.random(40, 360)
-local misses = 0 
+local playTime = 30 * 1000;
+local toppingSprite = nil;
+local score = 0;
+local Y = 40;
+local randX = math.random(40, 360);
+local misses = 0;
+local toppingImage = nil;
+local images = {
+	'image/burger',
+	'image/ketchup',
+	'image/lettuce',
+	'image/onion',
+	'image/tomato'
+}
 
 --  functions
 local function resetTimer()
 	playTimer = playdate.timer.new(playTime, playTime, 0, playdate.easingFunctions.linear)
 end
 
-local function moveCoin()
+local function updateToppingImage()
+	print(toppingImage)
+	toppingImage = gfx.image.new(images[math.random(#images)])
+	toppingSprite:setImage(toppingImage)
+end
+
+local function moveTopping()
 	X = randX
 	if Y > 200 then
 		misses += 1
+		-- random topping
+		updateToppingImage()
+		
 		randX = math.random(40, 360)
 		Y = 40
 	end
-	-- removed
-	-- local randX = 40
 
-	-- local randY = math.random(40, 200)
-
-	coinSprite:moveTo(randX, Y)
+	toppingSprite:moveTo(randX, Y)
 	Y += 2
 end
+
+-- local function draw()
+-- 	screen.clear()
+-- 	screen.text("Welcome to My Game!")
+-- 	screen.update()
+--   end
 
 -- on game load
 local function initialize ()
@@ -49,11 +68,12 @@ local function initialize ()
 	playerSprite:setCollideRect(0,0,playerSprite:getSize())
 	playerSprite:add()
 
-	local coinImage = gfx.image.new("image/coin")
-	coinSprite = gfx.sprite.new(coinImage)
-	moveCoin()
-	coinSprite:setCollideRect(0, 0, coinSprite:getSize())
-	coinSprite:add()
+
+	toppingImage = gfx.image.new(images[math.random(#images)])
+	toppingSprite = gfx.sprite.new(toppingImage)
+	moveTopping()
+	toppingSprite:setCollideRect(0, 0, toppingSprite:getSize())
+	toppingSprite:add()
 
 			-- game background
 	local backgroundImage = gfx.image.new("image/background")
@@ -66,6 +86,7 @@ local function initialize ()
 	)
 
 	resetTimer()
+
 end;
 
 initialize()
@@ -75,7 +96,7 @@ function playdate.update()
 	if playTimer.value == 0 then
 		if playdate.buttonIsPressed(playdate.kButtonA) then
 			resetTimer()
-			moveCoin()
+			moveTopping()
 			score = 0
 		end
 	else
@@ -92,14 +113,17 @@ function playdate.update()
 			playerSprite:moveBy(-playerSpeed, 0)
 		end
 
-		local collisions = coinSprite:overlappingSprites()
+		local collisions = toppingSprite:overlappingSprites()
 		if #collisions >= 1 then
-			randX = math.random(40, 360)
-			Y = 200
-			moveCoin()
+			Y = 40
 			score += 1
+			randX = math.random(40, 360)
+			-- random topping
+			updateToppingImage()
+			moveTopping()
+
 		end
-		moveCoin()
+		moveTopping()
 
 	end
 

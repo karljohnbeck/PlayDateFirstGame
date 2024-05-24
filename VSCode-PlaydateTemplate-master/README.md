@@ -13,3 +13,5 @@ TOdo
     - add bun for win
     - limit movement
     
+on mac cmd shift p to run
+P
